@@ -1,3 +1,5 @@
+# Testando codigo simples em python no vs code
+
 def soma(x: float, y: float) -> float:
     return x + y
 
