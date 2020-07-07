@@ -1,0 +1,44 @@
+1) Defina se os seguintes problemas são de regressão 
+ou classificação, definindo também possíveis atributos de 
+entrada e qual seria sua saída:
+
+Predição de quais são os e-mails importantes e menos importantes
+-Classificação
+-Remetente, formalidade, tamanho do e-mail(adequado ao que se propoe), assunto, ortografia e gramática 
+-Importante ou não 
+
+Predição de quantos gols um time irá marcar
+-Regressão 
+-Força do elenco, força adversario, media de gols (ultimas partidas), media de gols sofridos (adversario)
+-Numero de gols
+
+Você gostaria de saber se um determinado usuário é malicioso ou não
+-Classificação
+-
+-SIM OU NÃO
+
+Predição do valor da nota em uma prova antes da mesma ser aplicada
+-Regressão
+-Notas anteriores, difuculdade da prova, conhecimento da materia, tempo
+-Nota da prova
+
+RESPOSTA
+Predição de quais são os e-mails importantes e menos importantes
+Classificação: 
+Entrada: Remetente do e-mail, Nº de vezes que este usuário respondeu à este remetente, Nº de vezes que ocorre uma determinada palavra “p” (retirando artigos e preposições). 
+Saída: { “importante” , “não-é-importante”}
+
+Predição de quantos gols um time irá marcar
+Regressão:
+Entrada: Nº de vitórias nos últimos jogos, reputação do técnico, Nº de vitórias contra o adversário em questão.
+Saída: {0...+∞}
+
+Você gostaria de saber se um determinário usuário é malicioso ou não
+Classificação
+Entrada: #de tentativas mal sucedidas de login, região que este usuário está fazendo as requisições
+Saída: {“sim”, “não”} Sendo que “sim” significa que o usuário é malicioso, “não” caso contrário
+
+Predição do valor da nota em uma prova antes da mesma ser aplicada
+Regressão:
+Entrada: Média geral do aluno, média geral do aluno em disciplinas relacionadas, frequência do aluno na disciplina, notas nas provas anteriores da mesma disciplina
+  
