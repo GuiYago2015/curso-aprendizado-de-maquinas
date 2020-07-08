@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\guiya\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
     "code-runner.executorMap": {
         "python": "venv\\Scripts\\python.exe"
     },

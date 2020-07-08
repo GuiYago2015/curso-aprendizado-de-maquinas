@@ -1,14 +1,14 @@
-1) Defina se os seguintes problemas são de regressão 
-ou classificação, definindo também possíveis atributos de 
+1) Defina se os seguintes problemas são de regressão
+ou classificação, definindo também possíveis atributos de
 entrada e qual seria sua saída:
 
 Predição de quais são os e-mails importantes e menos importantes
 -Classificação
--Remetente, formalidade, tamanho do e-mail(adequado ao que se propoe), assunto, ortografia e gramática 
--Importante ou não 
+-Remetente, formalidade, tamanho do e-mail(adequado ao que se propoe), assunto, ortografia e gramática
+-Importante ou não
 
 Predição de quantos gols um time irá marcar
--Regressão 
+-Regressão
 -Força do elenco, força adversario, media de gols (ultimas partidas), media de gols sofridos (adversario)
 -Numero de gols
 
@@ -24,7 +24,7 @@ Predição do valor da nota em uma prova antes da mesma ser aplicada
 
 RESPOSTA
 Predição de quais são os e-mails importantes e menos importantes
-Classificação: 
+Classificação:
 Entrada: Remetente do e-mail, Nº de vezes que este usuário respondeu à este remetente, Nº de vezes que ocorre uma determinada palavra “p” (retirando artigos e preposições). 
 Saída: { “importante” , “não-é-importante”}
 
@@ -41,4 +41,3 @@ Saída: {“sim”, “não”} Sendo que “sim” significa que o usuário é 
 Predição do valor da nota em uma prova antes da mesma ser aplicada
 Regressão:
 Entrada: Média geral do aluno, média geral do aluno em disciplinas relacionadas, frequência do aluno na disciplina, notas nas provas anteriores da mesma disciplina
-  
