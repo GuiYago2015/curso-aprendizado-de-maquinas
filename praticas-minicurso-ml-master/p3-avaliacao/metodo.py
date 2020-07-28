@@ -45,7 +45,7 @@ class ScikitLearnAprendizadoDeMaquina(MetodoAprendizadoDeMaquina):
 
         # execute o método fit  de ml_method e crie o modelo
         model = self.ml_method.fit(x_treino, y_treino)
-        # faça a mesma separação que fizemos em x_treino e y_treino nos 
+        # faça a mesma separação que fizemos em x_treino e y_treino nos
         # dados a serem previstos
         x_to_predict = df_data_to_predict.drop(col_classe, axis=1)
         y_to_predict = df_data_to_predict[col_classe]
@@ -58,5 +58,5 @@ class ScikitLearnAprendizadoDeMaquina(MetodoAprendizadoDeMaquina):
 
         # retorne o resultado por meio do método predict
         y_predictions = self.ml_method.predict(x_to_predict)
-        
+
         return Resultado(y_to_predict, y_predictions)
