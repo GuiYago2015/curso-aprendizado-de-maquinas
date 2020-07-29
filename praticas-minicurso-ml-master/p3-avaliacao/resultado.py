@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import warnings
 from typing import List
+
+
 class Resultado():
     def __init__(self, y:List[float], predict_y:List[float]):
         """
@@ -133,9 +135,19 @@ class Fold():
             self.arr_folds_validacao = self.gerar_k_folds(df_treino,num_folds_validacao,col_classe,num_repeticoes_validacao)
         else:
             self.arr_folds_validacao = []
+
+
     @staticmethod
-    def gerar_k_folds(df_dados,val_k:int,col_classe:str,num_repeticoes:int=1,seed:int=1,
-                    num_folds_validacao:int=0,num_repeticoes_validacao:int=1) -> List["Fold"]:
+    def gerar_k_folds(
+        df_dados,
+        val_k: int,
+        col_classe: str,
+        num_repeticoes: int = 1,
+        seed: int = 1,
+        num_folds_validacao: int = 0,
+        num_repeticoes_validacao: int = 1
+    ) -> List["Fold"]:
+
         """
         Implementar esta função de acordo com os comentários no código
         Retorna um vetor arr_folds com todos os k folds criados a partir do DataFrame df
@@ -145,66 +157,76 @@ class Fold():
         col_classe: coluna que representa a classe
         seed: seed para a amostra aleatória
         """
-        #1. especifique o número de instancias por fold usando
-        #...o parametro val_k
-        num_instances_per_partition = None
-        #folds de saida
+        # 1. especifique o número de instancias por fold usando
+        # ...o parametro val_k
+
+        num_instances_per_partition = len(df_dados) // val_k
+        num_instances_total = len(df_dados)-1
+
+        # folds de saida
         arr_folds = []
 
-
-
         for num_repeticao in range(num_repeticoes):
-            #2. Embaralhe os dados: para isso, use o método sample para fazer uma amostra aleatória usando 100% dos dados. Use a seed passada como parametro
-            #lembre-se que, para cada repetição, deve-se haver uma seed diferente
-            #para isso, use seed+num_repeticao
-            df_dados_rand = None
+            # 2. Embaralhe os dados: para isso, use o método sample para fazer uma amostra aleatória usando 100% dos dados. Use a seed passada como parametro
+            # lembre-se que, para cada repetição, deve-se haver uma seed diferente
+            # para isso, use seed+num_repeticao
 
-            #Impressão dos ids dos dados (exiba o print para testes)
-            #print("Dados: "+str(df.index.values))
+            df_dados_rand = df_dados.sample(frac=1.0, random_state=seed + num_repeticao)
 
-            #para cada fold num_fold:
+            # Impressão dos ids dos dados (exiba o print para testes)
+            # print("Dados: "+str(df.index.values))
+
+            # para cada fold num_fold:
             for num_fold in range(val_k):
-                #2. especifique o inicio e fim do fold de teste. Caso seja o ultimo, o fim será o tamanho do vetor.
-                #Use num_instances_per_partition e num_fold para deliminar o inicio e fim do teste
-                ini_fold_to_predict = None
+                # 2. especifique o inicio e fim do fold de teste. Caso seja o ultimo, o fim será o tamanho do vetor.
+                # Use num_instances_per_partition e num_fold para deliminar o inicio e fim do teste
+
+                ini_fold_to_predict = num_fold*num_instances_per_partition
                 if num_fold < val_k-1:
-                    fim_fold_to_predict = None
+                    fim_fold_to_predict = ini_fold_to_predict + num_instances_per_partition
                 else:
-                    fim_fold_to_predict = None
+                    fim_fold_to_predict = len(df_dados)
 
-                #print(f"Inicio: {ini_fold_to_predict} -  Fim: {fim_fold_to_predict}")
-                #3. por meio do df_dados_rand, obtenha os dados de avaliação (teste ou validação)
-                df_to_predict = None
-                #print(df_to_predict)
+                # print(f"Inicio: {ini_fold_to_predict} -  Fim: {fim_fold_to_predict}")
+                # 3. por meio do df_dados_rand, obtenha os dados de avaliação (teste ou validação)
 
-                #4. Crie o treino por meio dos dados originais (df_dados_rand),
-                #removendo os dados que serão avaliados  (df_to_predict)
-                df_treino = None
-                #print(df_treino)
+                df_to_predict = df_dados_rand[ini_fold_to_predict: fim_fold_to_predict]
 
-                #5. Crie o fold (objeto da classe Fold) para adicioná-lo no vetor
-                fold = None
+                # print(df_to_predict)
+
+                # 4. Crie o treino por meio dos dados originais (df_dados_rand),
+                # removendo os dados que serão avaliados  (df_to_predict)
+
+                df_treino = df_dados_rand.drop(df_to_predict.index)
+
+                # print(df_treino)
+
+                # 5. Crie o fold (objeto da classe Fold) para adicioná-lo no vetor
+
+                fold = Fold(df_treino, df_to_predict, col_classe, num_folds_validacao, num_repeticoes_validacao)
                 arr_folds.append(fold)
 
-
-
-        #imprime o número instancias por fold (descomente para testes)
-        """
+        # imprime o número instancias por fold (descomente para testes)
+        
         for num_repeticao in range(num_repeticoes):
             for num_fold in range(val_k):
                 i = val_k*num_repeticao+num_fold
-                df_treino  = arr_folds[i].df_treino
-                df_to_predict  = arr_folds[i].df_data_to_predict
+                df_treino = arr_folds[i].df_treino
+                df_to_predict = arr_folds[i].df_data_to_predict
                 qtd_treino = len(df_treino.index)
                 qtd_to_predict = len(df_to_predict.index)
+
+                """
                 print(f"Repeticao #{num_repeticao}  Fold #{num_fold} instancias no treino: {qtd_treino} teste: {qtd_to_predict}")
                 print(f"\tÍndices das instancias do treino: {df_treino.index.values}")
                 print(f"\tÍndices das instancias a avaliar (teste ou validação): {df_to_predict.index.values}")
                 print(" ")
-        """
+                """
+
         return arr_folds
 
     def __str__(self):
         return f"Treino: \n{self.df_treino}\n Dados a serem avaliados (teste ou validação): {self.df_data_to_predict}"
+
     def __repr__(self):
         return str(self)

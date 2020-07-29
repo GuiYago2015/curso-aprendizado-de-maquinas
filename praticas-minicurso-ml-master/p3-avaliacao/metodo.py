@@ -40,13 +40,17 @@ class ScikitLearnAprendizadoDeMaquina(MetodoAprendizadoDeMaquina):
         # x_treino deverá ser um dataframe que possua apenas as colunas dos
         # atributos (use o método drop com o parametro axis)
         # y_treino deverá possuir apenas os valores coluna da classe
+
         x_treino = df_treino.drop(col_classe, axis=1)
         y_treino = df_treino[col_classe]
 
         # execute o método fit  de ml_method e crie o modelo
+
         model = self.ml_method.fit(x_treino, y_treino)
+
         # faça a mesma separação que fizemos em x_treino e y_treino nos
         # dados a serem previstos
+
         x_to_predict = df_data_to_predict.drop(col_classe, axis=1)
         y_to_predict = df_data_to_predict[col_classe]
 
@@ -57,6 +61,7 @@ class ScikitLearnAprendizadoDeMaquina(MetodoAprendizadoDeMaquina):
         # print("y_to_predict: "+str(y_to_predict))
 
         # retorne o resultado por meio do método predict
+        
         y_predictions = self.ml_method.predict(x_to_predict)
 
         return Resultado(y_to_predict, y_predictions)
